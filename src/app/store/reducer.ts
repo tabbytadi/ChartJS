@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import * as DataActions from './actions'; // Adjust import path
+import * as DataActions from './actions';
 
 export interface State {
   data: any;

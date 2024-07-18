@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
 import { reducer } from './store/reducer';
 import { DataEffects } from './store/effects';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,11 +16,12 @@ import { DataEffects } from './store/effects';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule, // Import HttpClientModule
+    HttpClientModule,
     StoreModule.forRoot({ data: reducer }),
     EffectsModule.forRoot([DataEffects]),
   ],
-  providers: [],
+  providers: [provideHttpClient(withFetch()),],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

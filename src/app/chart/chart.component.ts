@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { State } from '../store/reducer'; // Adjust import path
-import { loadData } from '../store/actions'; // Adjust import path
+import { State } from '../store/reducer';
+import { loadData } from '../store/actions';
 
 @Component({
   selector: 'app-chart',
