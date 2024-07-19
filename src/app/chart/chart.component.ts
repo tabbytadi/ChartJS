@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { State } from '../store/reducer';
+import { Store } from '@ngrx/store';
 import { loadData } from '../store/actions';
+import { Chart } from 'chart.js';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
@@ -12,38 +12,26 @@ import { loadData } from '../store/actions';
 export class ChartComponent implements OnInit {
   data$: Observable<any>;
 
-  public barChartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-    legend: {
-      display: true,
-      position: 'top'
-    },
-    scales: {
-      xAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  };
-
-  public barChartLabels: string[] = [];
-  public barChartType: string = 'bar';
-  public barChartLegend: boolean = true;
-  public barChartData: any[] = [];
-
-  constructor(private store: Store<{ data: State }>) {
-    this.data$ = store.pipe(select('data'));
+  constructor(private store: Store<{ data: any }>) {
+    this.data$ = store.select('data');
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.store.dispatch(loadData());
-
     this.data$.subscribe(state => {
       if (state.data) {
-        this.barChartLabels = state.data.labels;
-        this.barChartData = state.data.datasets;
+        new Chart('myChart', {
+          type: 'bar',
+          data: state.data,
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
       }
     });
   }
